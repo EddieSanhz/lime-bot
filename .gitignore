@@ -1,3 +1,10 @@
+# Lime secret data 💚
+src/modules/chatbot/db.json
+src/config.json
+
+# macOS sh*t
+.DS_Store
+
 # Logs
 logs
 *.log

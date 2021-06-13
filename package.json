@@ -1,0 +1,31 @@
+{
+  "name": "lime-bot",
+  "version": "1.0.0",
+  "description": "Lime Discord Bot",
+  "main": "src/main.js",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "emoji-regex": "^9.2.2",
+    "neural-chatbot": "^2.0.18",
+    "neural-phrasex": "^1.0.18"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://eddiesanhz@github.com/EddieSanhz/lime-bot.git"
+  },
+  "author": "EddieSanhz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EddieSanhz/lime-bot/issues"
+  },
+  "homepage": "https://github.com/EddieSanhz/lime-bot#readme"
+}
