@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Simple chatbot functions for answering to simple questions
 - Dynamic data on bot responses
 - Response and typing times simulation
+- Stress module 😈

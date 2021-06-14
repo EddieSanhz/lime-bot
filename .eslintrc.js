@@ -42,11 +42,7 @@ module.exports = {
 		'comma-dangle': ['error', 'never'],
 		'padded-blocks': 0,
 		'arrow-body-style': 0,
-		'no-underscore-dangle': ['warn', {
-			allowAfterThis: true,
-			allowAfterSuper: true,
-			allow: ['_call', '__rootpath', '_where']
-		}],
+		'no-underscore-dangle': 0,
 		'space-before-function-paren': ['error', {
 			anonymous: 'never',
 			named: 'never',
