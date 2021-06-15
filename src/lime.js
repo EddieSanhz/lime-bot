@@ -73,9 +73,7 @@ module.exports = class Lime {
 
 		console.log(`Replying to ${user.tag}:`, message.content);
 
-		const response = await this.modules.chatbot.chat(message, user);
-
-		return message.reply(response);
+		return this.modules.chatbot.chat(message, user);
 	}
 
 	getUserById({ author, member }) {

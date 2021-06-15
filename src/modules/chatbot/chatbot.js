@@ -19,6 +19,8 @@ module.exports = class Chatbot {
 				}
 			}
 		};
+
+		this.pendingMessages = [];
 	}
 
 	get bot() {
@@ -47,20 +49,40 @@ module.exports = class Chatbot {
 	 */
 	async chat(message, user, { simulateTyping = true } = {}) {
 
+		if(this.busy) {
+			this.pendingMessages.push([message, user]);
+			return;
+		}
+
+		this.busy = true;
+
 		await this.initializeChatbot();
 
 		if(simulateTyping) {
-			await this.wait(4, 8);
+
+			// Reaction time
+			if(this.pendingMessages.length)
+				await this.wait(1, 2);
+			else
+				await this.wait(4, 8);
+
 			message.channel.startTyping();
+
+			// Typing time
 			await this.wait(2, 6);
+			message.channel.stopTyping();
 		}
 
 		const { response } = await this.bot.getResult(message.content, this.userData);
 
-		if(simulateTyping)
-			message.channel.stopTyping();
+		message.reply(DynamicResponses.parse(response, user));
 
-		return DynamicResponses.parse(response, user);
+		this.busy = false;
+
+		if(this.pendingMessages.length) {
+			const [[nextMessage, nextMessageUser]] = this.pendingMessages.splice(0, 1);
+			return this.chat(nextMessage, nextMessageUser);
+		}
 	}
 
 	/**
