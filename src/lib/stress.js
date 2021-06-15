@@ -9,19 +9,19 @@ module.exports = class Stress {
 	/**
 	 * Stress Simulator (Isn't the real life?)
 	 * @param {Object} options
-	 * @param {Number} options.stressMultiplier The stress multiplier factor (the more sh*t happens, the more stress you get, compadre)
+	 * @param {Number} options.multiplier The stress multiplier factor (the more sh*t happens, the more stress you get, compadre)
 	 * @param {Number} options.copingTime The time (seconds) to wait until the stress returns to <= 1 (the amount of time you need to cry)
 	 * @example
 	 * // Increase stress proportionally at 1.25x and cry for 2 minutes to feel good again
-	 * new Stress({ stressMultiplier: 1.25, copingTime: 120 });
+	 * new Stress({ multiplier: 1.25, copingTime: 120 });
 	 */
-	constructor({ stressMultiplier, copingTime }) {
+	constructor({ multiplier, copingTime }) {
 
 		this.copingCooldownFactor = this.constructor.maxStress / copingTime;
 		this.copingMechanism = {};
 
-		this.stressMultiplier = stressMultiplier;
-		this.stressLevel = 1;
+		this.multiplier = multiplier;
+		this.level = 1;
 	}
 
 	/**
@@ -42,13 +42,13 @@ module.exports = class Stress {
 
 	/**
 	 * HAHAHAHA YES >:D
-	 * - Uh, yeah this increases the stress level using the multipler and that, you know...
+	 * - Uh, yeah this increases the stress level using the multiplier and that, you know...
 	 */
 	increaseStress() {
 
-		this.stressLevel *= this.stressMultiplier;
+		this.level *= this.multiplier;
 
-		if(this.stressLevel >= this.constructor.maxStress)
+		if(this.level >= this.constructor.maxStress)
 			this.isSuffering = true;
 
 		this.cope();
@@ -66,13 +66,13 @@ module.exports = class Stress {
 
 		this.copingMechanism = setInterval(() => {
 
-			this.stressLevel -= this.copingCooldownFactor;
+			this.level -= this.copingCooldownFactor;
 
-			if(this.stressLevel > 1)
+			if(this.level > 1)
 				return;
 
 			this.isSuffering = false;
-			this.stressLevel = 1;
+			this.level = 1;
 
 			clearInterval(this.copingMechanism);
 

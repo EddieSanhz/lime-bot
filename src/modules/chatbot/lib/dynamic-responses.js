@@ -10,7 +10,7 @@ module.exports = class DynamicResponses {
 		return formatters;
 	}
 
-	static parse(response) {
+	static parse(response, context) {
 
 		const dynamicItems = response.match(identifierRegex);
 
@@ -21,10 +21,12 @@ module.exports = class DynamicResponses {
 
 			const formatterType = identifier.replace(/<#:|>/g, '');
 
-			if(!this.formatters[formatterType])
+			const [name, ...props] = formatterType.split('.');
+
+			if(!this.formatters[name])
 				return;
 
-			formatted[formatterType] = this.formatters[formatterType]();
+			formatted[formatterType] = this.formatters[name](props, context);
 
 			return formatted;
 		}, {});

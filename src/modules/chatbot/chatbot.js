@@ -40,11 +40,12 @@ module.exports = class Chatbot {
 	/**
 	 * Makes the bot reply to a received chat message
 	 * @param {Discord.Message} message The discord.js message object
+	 * @param {User} user An user (see user lib for more info)
 	 * @param {Object} options
 	 * @param {Boolean} options.simulateTyping Specifies if the bot should simulate reaction and typing times (default: true)
 	 * @returns
 	 */
-	async chat(message, { simulateTyping = true } = {}) {
+	async chat(message, user, { simulateTyping = true } = {}) {
 
 		await this.initializeChatbot();
 
@@ -59,7 +60,7 @@ module.exports = class Chatbot {
 		if(simulateTyping)
 			message.channel.stopTyping();
 
-		return DynamicResponses.parse(response);
+		return DynamicResponses.parse(response, user);
 	}
 
 	/**

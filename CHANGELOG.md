@@ -10,3 +10,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Dynamic data on bot responses
 - Response and typing times simulation
 - Stress module 😈
+- User module for managing different user profiles
+- User data dynamic responses
