@@ -49,3 +49,8 @@ Also this won't be developed as a software production project so, don't expect t
 <p align="center">
 	She is Lime, also known as K.
 </p>
+
+<h1></h1>
+
+<h3>Wow, I'm really doing this?</h3>
+<img width="256" height="256" src="https://i.redd.it/a604rad7j4651.png">
