@@ -56,13 +56,18 @@ module.exports = class Lime {
 		// Stressed messages should to be answered after it have finished replying to the message queue first
 
 		if(!user.stress.pressure()) {
+
 			console.log(`Bot currently tired of ${user.name}: stress level ${user.stress.level}`);
-			return !previousStressStatus.user && message.reply('Enough messages from you, this is boring... If you want to talk to me, sweetie, try again in a while and **maybe** I\'ll answer you.');
+
+			return !previousStressStatus.user &&
+			this.modules.chatbot.chat(message, user,
+				() => 'Enough messages from you, this is boring... If you want to talk to me, sweetie, try again in a while and **maybe** I\'ll answer you.'
+			);
 		}
 
 		if(!this.stress.pressure()) {
 			console.log(`Bot currently stressed: stress level ${this.stress.level}`);
-			return !previousStressStatus.main && message.reply('Well fuck! Enough messages from all, I\'m fucking tired, I\'ll back in a while, maybe.');
+			return !previousStressStatus.main && this.modules.chatbot.send(message.channel, 'Well fuck! Enough messages from all, I\'m fucking tired, I\'ll back in a while, maybe.');
 		}
 
 		console.log({

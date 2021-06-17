@@ -43,45 +43,30 @@ module.exports = class Chatbot {
 	 * Makes the bot reply to a received chat message
 	 * @param {Discord.Message} message The discord.js message object
 	 * @param {User} user An user (see user lib for more info)
-	 * @param {Object} options
-	 * @param {Boolean} options.simulateTyping Specifies if the bot should simulate reaction and typing times (default: true)
+	 * @param {Function} customResponse (optional) Uses the specified function to get the bot response message
 	 * @returns
 	 */
-	async chat(message, user, { simulateTyping = true } = {}) {
+	async chat(message, user, customResponse) {
 
 		if(this.busy) {
-			this.pendingMessages.push([message, user]);
+			this.pendingMessages.push([message, user, customResponse]);
 			return;
 		}
 
 		this.busy = true;
 
 		await this.initializeChatbot();
+		await this.simulateTyping(message.channel);
 
-		if(simulateTyping) {
-
-			// Reaction time
-			if(this.pendingMessages.length)
-				await this.wait(1, 2);
-			else
-				await this.wait(4, 8);
-
-			message.channel.startTyping();
-
-			// Typing time
-			await this.wait(2, 6);
-			message.channel.stopTyping();
-		}
-
-		const { response } = await this.bot.getResult(message.content, this.userData);
+		const response = await (customResponse ? customResponse(message.content) : this.getResponse(message.content));
 
 		message.reply(DynamicResponses.parse(response, user));
 
 		this.busy = false;
 
 		if(this.pendingMessages.length) {
-			const [[nextMessage, nextMessageUser]] = this.pendingMessages.splice(0, 1);
-			return this.chat(nextMessage, nextMessageUser);
+			const [[nextMessage, nextMessageUser, nextCustomResponse]] = this.pendingMessages.splice(0, 1);
+			return this.chat(nextMessage, nextMessageUser, nextCustomResponse);
 		}
 	}
 
@@ -100,6 +85,35 @@ module.exports = class Chatbot {
 	}
 
 	/**
+	 * Makes the bot to use it's computational powers to reply to your stupid message :D
+	 * @param {String} message The message to reply
+	 * @returns {String} The bot response
+	 */
+	async getResponse(message) {
+		const { response } = await this.bot.getResult(message, this.userData);
+		return response;
+	}
+
+	/**
+	 * Simulates reaction and typing times owo
+	 * @param {Channel} discordChannel Discord Channel object
+	 */
+	async simulateTyping(discordChannel) {
+
+		// Reaction time
+		if(this.pendingMessages.length)
+			await this.wait(1, 2);
+		else
+			await this.wait(4, 8);
+
+		discordChannel.startTyping();
+
+		// Typing time
+		await this.wait(2, 6);
+		discordChannel.stopTyping();
+	}
+
+	/**
 	 * Waits a random amount of seconds between the min and max values
 	 * @param {Number} min minimum seconds to wait
 	 * @param {Number} max maximum seconds to wait
@@ -114,5 +128,14 @@ module.exports = class Chatbot {
 				return res();
 			}, secondsToWait * 1000);
 		});
+	}
+
+	/**
+	 * Send a message to the received discord channel
+	 * @param {Channel} discordChannel The discord channel object
+	 */
+	async send(discordChannel, message) {
+		await this.simulateTyping(discordChannel);
+		return discordChannel.send(message);
 	}
 };
