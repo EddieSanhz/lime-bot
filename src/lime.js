@@ -10,7 +10,16 @@ module.exports = class Lime {
 
 	constructor(config) {
 
-		this.discordClient = new Client();
+		this.discordClient = new Client({
+			presence: {
+				status: 'idle',
+				activity: {
+					name: 'You',
+					type: 'WATCHING'
+				}
+			}
+		});
+
 		this.stress = new Stress(config.stress);
 
 		this.config = config;

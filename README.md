@@ -13,7 +13,7 @@ Yeah, this is hard and I'm not stable so, I'd rather not expect too much ðŸ˜”ðŸ‘
 
 ### How could it not be a spammer bot?
 -	It should stop when someone is constantly talking to it
-	- Stop replaying to them and wait a time (only for that person)
+	- Stop replying to them and wait a time (only for that person)
 	- Also it should stop if a lot of people is talking to it and go away for a while
 
 ### What I wish it could do?
