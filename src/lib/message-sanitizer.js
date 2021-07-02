@@ -2,8 +2,9 @@
 
 const emojiRegex = require('emoji-regex')();
 
-const customEmojiRegex = new RegExp(/<:(.*?)>/);
-const mentionRegex = new RegExp(/<@(.*?)>/);
+const customEmojiRegex = new RegExp(/<:(.*?)>/g);
+const mentionRegex = new RegExp(/<@(.*?)>/g);
+const spoilerRegex = new RegExp(/\|\|/g);
 
 module.exports = class MessageSanitizer {
 
@@ -12,7 +13,8 @@ module.exports = class MessageSanitizer {
 		return {
 			emoji: emojiRegex,
 			customEmoji: customEmojiRegex,
-			mentions: mentionRegex
+			mentions: mentionRegex,
+			spoiler: spoilerRegex
 		};
 	}
 

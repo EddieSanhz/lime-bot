@@ -88,7 +88,8 @@ module.exports = class Lime {
 			[
 				'mentions',
 				'customEmoji',
-				'emoji'
+				'emoji',
+				'spoiler'
 			],
 			message.content
 		);

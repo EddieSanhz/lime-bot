@@ -7,6 +7,9 @@
  * @example
  * UserFormatter(['stress','level'], user);
  */
+
+const isNumber = value => typeof value === 'number' && !Number.isNaN(Number(value));
+
 module.exports = (props, user) => {
 
 	return props.reduce((prop, key) => {
@@ -15,7 +18,7 @@ module.exports = (props, user) => {
 			return 'ERROR';
 
 		prop = prop[key];
-		return prop;
+		return isNumber(prop) ? Math.floor(prop) : prop;
 
 	}, user);
 };
