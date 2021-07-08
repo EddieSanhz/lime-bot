@@ -106,4 +106,18 @@ module.exports = class Lime {
 
 		return this.usersById[author.id];
 	}
+
+	async say(message, file, channelName) {
+
+		const discordChannel = this.discordClient.channels.cache.find(channel => channel.name === channelName && channel.type === 'text');
+
+		if(!discordChannel)
+			return console.log(`Invalid channel: '${channelName}' doesn't exist`);
+
+		console.log(`Sending to chat '${discordChannel.name}'`, { message, file });
+
+		await this.modules.chatbot.simulateTyping(discordChannel);
+
+		discordChannel.send(message, file && { files: [file] });
+	}
 };
